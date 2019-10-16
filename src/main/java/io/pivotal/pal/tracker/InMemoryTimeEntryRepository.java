@@ -12,14 +12,15 @@ public class InMemoryTimeEntryRepository implements TimeEntryRepository {
     private long seq = 0;
 
     public TimeEntry create(TimeEntry timeEntry) {
-        TimeEntry newEntry = new TimeEntry();
-        newEntry.setUserId(timeEntry.getUserId());
-        newEntry.setHours(timeEntry.getHours());
-        newEntry.setProjectId(timeEntry.getProjectId());
-        newEntry.setDate(timeEntry.getDate());
-
         seq = seq + 1;
-        newEntry.setId(seq);
+
+        TimeEntry newEntry = new TimeEntry(
+                seq,
+                timeEntry.getProjectId(),
+                timeEntry.getUserId(),
+                timeEntry.getDate(),
+                timeEntry.getHours()
+        );
 
         repo.put(seq, newEntry);
         return newEntry;
@@ -38,13 +39,13 @@ public class InMemoryTimeEntryRepository implements TimeEntryRepository {
             return null;
         }
 
-        TimeEntry newEntry = new TimeEntry();
-
-        newEntry.setUserId(timeEntry.getUserId());
-        newEntry.setHours(timeEntry.getHours());
-        newEntry.setProjectId(timeEntry.getProjectId());
-        newEntry.setDate(timeEntry.getDate());
-        newEntry.setId(timeEntryId);
+        TimeEntry newEntry = new TimeEntry(
+                timeEntryId,
+                timeEntry.getProjectId(),
+                timeEntry.getUserId(),
+                timeEntry.getDate(),
+                timeEntry.getHours()
+        );
 
         repo.put(timeEntryId, newEntry);
         return newEntry;
