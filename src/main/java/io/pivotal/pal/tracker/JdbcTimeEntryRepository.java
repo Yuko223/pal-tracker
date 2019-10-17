@@ -49,10 +49,8 @@ public class JdbcTimeEntryRepository implements TimeEntryRepository {
 
         jdbcTemplate.update(preparedStatementCreator, keyHolder);
 
-        BigInteger id = (BigInteger) keyHolder.getKey();
-
         return new TimeEntry(
-                id.longValue(),
+                keyHolder.getKey().longValue(),
                 timeEntry.getProjectId(),
                 timeEntry.getUserId(),
                 timeEntry.getDate(),
